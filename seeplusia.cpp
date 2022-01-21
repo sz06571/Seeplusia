@@ -215,7 +215,7 @@ void makeMove(string direction)
 		}
 	}
 
-	else if (direction == "South" && apples > 0) // When Down Arrow is pressed
+	else if (direction == "South" && applesLeft > 0) // When Down Arrow is pressed
 	{
 		if (currentState == "Enchanted Forest" && applesLeft >= 3) 				// Enchanted Forest ---> Wampire Cove
 		{
