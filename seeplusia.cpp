@@ -136,7 +136,7 @@ void makeMove(string direction)
 		{
 			currentState = "Eisten Tunnel";
 			applesLeft -= 2;
-			cout << "Elvin Waterfall ---> Eisten Tunnel (Make sure you have atleast 10 apples and 3 crystals!)" << endl;
+			cout << "Elvin Waterfall ---> Eisten Tunnel (Make sure you have atleast 10 apples and 3 crystals to go North!)" << endl;
 			gameState = "Running";
 			moveWest();
 			if (EistenCrystal == true)
