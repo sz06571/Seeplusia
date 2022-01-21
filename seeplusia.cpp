@@ -2,42 +2,42 @@
 #include "mover.hpp"
 
 int applesLeft = 20, nCrystalsFound = 0;
-string gameState = "Running";			  // gameState to imply that the game is currently Running
-string currentState = "Enchanted Forest"; // Starting position on game map
-bool MarshCrystal = true;				  // For crystal at Marsh of the Undead
-bool EistenCrystal = true;				  // For crystal at Eisten Tunnel
-bool WerewolfCrystal = true;			  // For crystal at Werewolf's Hill
-bool SwampsCrystal = true;				  // For crystal at Swamps of Despair
+string gameState = "Running";			  					// gameState to imply that the game is currently Running
+string currentState = "Enchanted Forest"; 						// Starting position on game map
+bool MarshCrystal = true;				  				// For crystal at Marsh of the Undead
+bool EistenCrystal = true;				  				// For crystal at Eisten Tunnel
+bool WerewolfCrystal = true;			  					// For crystal at Werewolf's Hill
+bool SwampsCrystal = true;				  				// For crystal at Swamps of Despair
 
 // Function to allow player to move only in the specified directions
 void makeMove(string direction)
 {
-	if (direction == "East" && applesLeft > 0) // When Right Arrow is pressed
+	if (direction == "East" && applesLeft > 0) 					// When Right Arrow is pressed
 	{
-		if (currentState == "Enchanted Forest" && applesLeft >= 1) // Enchanted Forest ---> Sands of Quick ---> Game Lost!
+		if (currentState == "Enchanted Forest" && applesLeft >= 1) 		// Enchanted Forest ---> Sands of Quick ---> Game Lost!
 		{
 			currentState = "Sands of Quick";
 			applesLeft--;
 			cout << "Enchanted Forest ---> Sands of Quick ---> You sank in sand and died!" << endl;
-			moveEast();			// This function is called only if warrior needs to be moved to the right
-			gameState = "Lost"; // gameState when the game is Lost
+			moveEast();							// This function is called only if warrior needs to be moved to the right
+			gameState = "Lost"; 						// gameState when the game is Lost
 		}
 
-		else if (currentState == "Wampire Cove" && applesLeft >= 1) // Wampire Cove ---> Marsh of Undead, crystal found
+		else if (currentState == "Wampire Cove" && applesLeft >= 1) 		// Wampire Cove ---> Marsh of Undead, crystal found
 		{
 			currentState = "Marsh of Undead";
 			applesLeft -= 1;
 			cout << "Wampire Cove ---> Marsh of Undead" << endl;
 			moveEast();
 			gameState = "Running";
-			if (MarshCrystal == true) // Since there is a crystal here at the Marsh, we want to make sure the crystal is only collected once.
+			if (MarshCrystal == true) 			// Since there is a crystal here at the Marsh, we want to make sure the crystal is only collected once.
 			{
-				nCrystalsFound++;	  // To increment number of crystals found
-				MarshCrystal = false; // it is changed to false so that once marsh_d != true, the condition is skipped and no crystal is collected.
+				nCrystalsFound++;	  				// To increment number of crystals found
+				MarshCrystal = false; 		// It is changed to false so that once marsh_d != true, the condition is skipped and no crystal is collected.
 			}
 		}
 
-		else if (currentState == "Swamps of Despair" && applesLeft >= 1) // Swamps of Despair ---> Wampire Cove
+		else if (currentState == "Swamps of Despair" && applesLeft >= 1) 	// Swamps of Despair ---> Wampire Cove
 		{
 			currentState = "Wampire Cove";
 			applesLeft -= 1;
@@ -46,7 +46,7 @@ void makeMove(string direction)
 			moveEast();
 		}
 
-		else if (currentState == "Elvin Waterfall" && applesLeft >= 2) // Elvin Waterfall ---> Werewolf Hill, crystal found
+		else if (currentState == "Elvin Waterfall" && applesLeft >= 2) 		// Elvin Waterfall ---> Werewolf Hill, crystal found
 		{
 			currentState = "Werewolf Hill";
 			applesLeft -= 2;
@@ -55,12 +55,12 @@ void makeMove(string direction)
 			moveEast();
 			if (WerewolfCrystal == true)
 			{
-				nCrystalsFound++;
-				WerewolfCrystal = false; // A crystal was collected
+				nCrystalsFound++;					// A crystal was collected
+				WerewolfCrystal = false; 
 			}
 		}
 
-		else if (currentState == "Eisten Tunnel" && applesLeft >= 2) // Eisten Tunnel ---> Elvin Waterfall
+		else if (currentState == "Eisten Tunnel" && applesLeft >= 2) 		// Eisten Tunnel ---> Elvin Waterfall
 		{
 			currentState = "Elvin Waterfall";
 			applesLeft -= 2;
@@ -69,32 +69,33 @@ void makeMove(string direction)
 			moveEast();
 		}
 
-		else // A condition to make sure player doesn't go in a direction where there is no arrow on the map
+		else 						/* A condition to make sure that the player doesn't go in a direction where there are no arrows on the map/
+								player can't cross the path if he has lesser number of apples.*/
 		{
 			applesLeft -= 1;
 			cout << "Invalid Move" << endl;
 		}
 	}
 
-	else if (direction == "West" && applesLeft > 0) // When Left Arrow is pressed
+	else if (direction == "West" && applesLeft > 0) 				// When Left Arrow is pressed
 	{
-		if (currentState == "Bridge of Death" && applesLeft >= 5 && nCrystalsFound == 4) // Bridge of Death ---> Wizard's Castle ---> Game Won!
+		if (currentState == "Bridge of Death" && applesLeft >= 5 && nCrystalsFound == 4) 	// Bridge of Death ---> Wizard's Castle ---> Game Won!
 		{
 			currentState = "Wizard's Castle";
 			applesLeft -= 5;
 			cout << "Bridge of Death ---> Wizard's Castle ---> Game Won!" << endl;
-			moveWest();		   // This function is called only if warrior needs to be moved to the left
-			gameState = "Won"; // gameState when the game is Won
+			moveWest();		   					// This function is called only if warrior needs to be moved to the left
+			gameState = "Won"; 						// gameState when the game is Won
 		}
 
-		else if (currentState == "Bridge of Death" && (applesLeft < 5 || nCrystalsFound != 4)) // Bridge of Death ---> Wizard's Castle ---> Game Lost!
+		else if (currentState == "Bridge of Death" && (applesLeft < 5 || nCrystalsFound != 4)) 	// Bridge of Death ---> Wizard's Castle ---> Game Lost!
 		{
 			currentState = "Wizard's Castle";
 			cout << "Bridge of Death ---> Wizard's Castle ---> You have <5 apples and/or <4 crystals" << endl;
 			gameState = "Running";
 		}
 
-		else if (currentState == "Wampire Cove" && applesLeft >= 1) // Wampire Cove ---> Swamps of Despair, crystal found
+		else if (currentState == "Wampire Cove" && applesLeft >= 1) 		// Wampire Cove ---> Swamps of Despair, crystal found
 		{
 			currentState = "Swamps of Despair";
 			applesLeft -= 1;
@@ -103,12 +104,12 @@ void makeMove(string direction)
 			gameState = "Running";
 			if (SwampsCrystal == true)
 			{
-				nCrystalsFound++;
-				SwampsCrystal = false; // A crystal was collected
+				nCrystalsFound++;					// A crystal was collected
+				SwampsCrystal = false; 
 			}
 		}
 
-		else if (currentState == "Apples Orchard" && applesLeft >= 1) // Apples Orchard ---> Werewolf Hill, crystal found
+		else if (currentState == "Apples Orchard" && applesLeft >= 1) 		// Apples Orchard ---> Werewolf Hill, crystal found
 		{
 			currentState = "Werewolf Hill";
 			applesLeft -= 1;
@@ -117,12 +118,12 @@ void makeMove(string direction)
 			gameState = "Running";
 			if (WerewolfCrystal == true)
 			{
-				nCrystalsFound++;
-				WerewolfCrystal = false; // A crystal was collected
+				nCrystalsFound++;					// A crystal was collected
+				WerewolfCrystal = false; 
 			}
 		}
 
-		else if (currentState == "Werewolf Hill" && applesLeft >= 2) // Werewolf Hill ---> Elvin Waterfall
+		else if (currentState == "Werewolf Hill" && applesLeft >= 2) 		// Werewolf Hill ---> Elvin Waterfall
 		{
 			currentState = "Elvin Waterfall";
 			applesLeft -= 2;
@@ -131,7 +132,7 @@ void makeMove(string direction)
 			moveWest();
 		}
 
-		else if (currentState == "Elvin Waterfall" && applesLeft >= 2) // Elvin Waterfall ---> Eisten Tunnel, crytsal found
+		else if (currentState == "Elvin Waterfall" && applesLeft >= 2) 		// Elvin Waterfall ---> Eisten Tunnel, crytsal found
 		{
 			currentState = "Eisten Tunnel";
 			applesLeft -= 2;
@@ -140,12 +141,12 @@ void makeMove(string direction)
 			moveWest();
 			if (EistenCrystal == true)
 			{
-				nCrystalsFound++;
-				EistenCrystal = false; // A crystal was collected
+				nCrystalsFound++;					// A crystal was collected
+				EistenCrystal = false; 
 			}
 		}
 
-		else if (currentState == "Marsh of Undead" && applesLeft >= 1) // Marsh of Undead ---> Wampire Cove
+		else if (currentState == "Marsh of Undead" && applesLeft >= 1) 		// Marsh of Undead ---> Wampire Cove
 		{
 			currentState = "Wampire Cove";
 			applesLeft -= 1;
@@ -161,9 +162,9 @@ void makeMove(string direction)
 		}
 	}
 
-	else if (direction == "North" && applesLeft > 0) // When Up Arrow is pressed
+	else if (direction == "North" && applesLeft > 0) 				// When Up Arrow is pressed
 	{
-		if (currentState == "Wampire Cove" && applesLeft >= 3) // Wampire Cove ---> Enchanted Forest
+		if (currentState == "Wampire Cove" && applesLeft >= 3) 			// Wampire Cove ---> Enchanted Forest
 		{
 			currentState = "Enchanted Forest";
 			applesLeft -= 3;
@@ -172,7 +173,7 @@ void makeMove(string direction)
 			gameState = "Running";
 		}
 
-		else if (currentState == "Werewolf Hill" && applesLeft >= 3) // Werewolf Hill --> Wampire Cove
+		else if (currentState == "Werewolf Hill" && applesLeft >= 3) 		// Werewolf Hill --> Wampire Cove
 		{
 			currentState = "Wampire Cove";
 			applesLeft -= 3;
@@ -181,7 +182,7 @@ void makeMove(string direction)
 			gameState = "Running";
 		}
 
-		else if (currentState == "Swamps of Despair" && applesLeft >= 1) // Swamps of Despair --> Bridge of Death
+		else if (currentState == "Swamps of Despair" && applesLeft >= 1) 	// Swamps of Despair --> Bridge of Death
 		{
 			currentState = "Bridge of Death";
 			applesLeft -= 1;
@@ -190,7 +191,7 @@ void makeMove(string direction)
 			gameState = "Running";
 		}
 
-		else if (currentState == "Eisten Tunnel" && applesLeft >= 10 && nCrystalsFound >= 3) // Eisten Tunnel --> Wizard's Castle ---> Game Won!
+		else if (currentState == "Eisten Tunnel" && applesLeft >= 10 && nCrystalsFound >= 3) 	// Eisten Tunnel --> Wizard's Castle ---> Game Won!
 		{
 			currentState = "Wizard's Castle";
 			applesLeft -= 10;
@@ -200,7 +201,7 @@ void makeMove(string direction)
 			gameState = "Won";
 		}
 
-		else if (currentState == "Eisten Tunnel" && (applesLeft < 10 || nCrystalsFound < 3)) // Eisten Tunnel --> Wizard's Castle ---> Game Lost!
+		else if (currentState == "Eisten Tunnel" && (applesLeft < 10 || nCrystalsFound < 3)) 	// Eisten Tunnel --> Wizard's Castle ---> Game Lost!
 		{
 			currentState = "Wizard's Castle";
 			cout << "You don't have 10 apples and/or 3 crystals to cross" << endl;
@@ -216,7 +217,7 @@ void makeMove(string direction)
 
 	else if (direction == "South") // When Down Arrow is pressed
 	{
-		if (currentState == "Enchanted Forest" && applesLeft >= 3) // Enchanted Forest ---> Wampire Cove
+		if (currentState == "Enchanted Forest" && applesLeft >= 3) 				// Enchanted Forest ---> Wampire Cove
 		{
 			currentState = "Wampire Cove";
 			applesLeft -= 3;
@@ -225,7 +226,7 @@ void makeMove(string direction)
 			gameState = "Running";
 		}
 
-		else if (currentState == "Wampire Cove" && applesLeft >= 3) // Wampire Cove ---> Werewolf Hill, crystal found
+		else if (currentState == "Wampire Cove" && applesLeft >= 3) 				// Wampire Cove ---> Werewolf Hill, crystal found
 		{
 
 			currentState = "Werewolf Hill";
@@ -235,12 +236,12 @@ void makeMove(string direction)
 			gameState = "Running";
 			if (WerewolfCrystal == true)
 			{
-				nCrystalsFound++;
-				WerewolfCrystal = false; // A crystal was collected
+				nCrystalsFound++;							// A crystal was collected
+				WerewolfCrystal = false; 
 			}
 		}
 
-		else if (currentState == "Marsh of Undead" && applesLeft >= 1) // Marsh of Undead ---> Apples Orchard
+		else if (currentState == "Marsh of Undead" && applesLeft >= 1) 				// Marsh of Undead ---> Apples Orchard
 		{
 
 			currentState = "Apples Orchard";
@@ -257,7 +258,7 @@ void makeMove(string direction)
 		}
 	}
 
-	else if (applesLeft <= 0) // If player runs out of apples, he dies of starvation
+	else if (applesLeft <= 0) 									// If player runs out of apples, he dies of starvation
 	{
 		cout << "You ran out of apples and died of starvation ---> Game Lost!" << endl;
 		gameState = "Lost";
