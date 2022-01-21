@@ -136,7 +136,7 @@ void makeMove(string direction)
 		{
 			currentState = "Eisten Tunnel";
 			applesLeft -= 2;
-			cout << "Elvin Waterfall ---> Eisten Tunnel (Make sure you have atleast 10 apples and 3 crystals to go North!)" << endl;
+			cout << "Elvin Waterfall ---> Eisten Tunnel (Before going to the Castle, make sure you have >= 10 apples and/or 3 crystals!)" << endl;
 			gameState = "Running";
 			moveWest();
 			if (EistenCrystal == true)
@@ -186,7 +186,7 @@ void makeMove(string direction)
 		{
 			currentState = "Bridge of Death";
 			applesLeft -= 1;
-			cout << "Swamps of Despair --> Bridge of Death" << endl;
+			cout << "Swamps of Despair --> Bridge of Death (Before going to the Castle, make sure you have >= 5 apples and/or 4 crystals!)" << endl;
 			moveNorth();
 			gameState = "Running";
 		}
