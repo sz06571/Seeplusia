@@ -99,7 +99,7 @@ void makeMove(string direction)
 		{
 			currentState = "Swamps of Despair";
 			applesLeft -= 1;
-			cout << "Wampire Cove ---> Swamps of Despair" << endl;
+			cout << "Wampire Cove ---> Swamps of Despair (Before moving ahead, make sure you have >= 6 apples and all 4 crystals!)" << endl;
 			moveWest();
 			gameState = "Running";
 			if (SwampsCrystal == true)
@@ -186,7 +186,7 @@ void makeMove(string direction)
 		{
 			currentState = "Bridge of Death";
 			applesLeft -= 1;
-			cout << "Swamps of Despair --> Bridge of Death (Before going to the Castle, make sure you have >= 5 apples and all 4 crystals!)" << endl;
+			cout << "Swamps of Despair --> Bridge of Death" << endl;
 			moveNorth();
 			gameState = "Running";
 		}
